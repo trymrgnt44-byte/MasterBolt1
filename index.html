@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МастерБолт - Шуруповерты</title>
+    <style>
+        /* ===== ОБЩИЕ СТИЛИ ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f0f5;
+            color: #2c3e50;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== ШАПКА ===== */
+        .header {
+            background: #2c3e50;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e8452c;
+        }
+
+        .logo-sub {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .user-info {
+            color: #ecf0f1;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-danger {
+            background: #e8452c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 1px solid #e8452c;
+        }
+
+        .btn-outline:hover {
+            background: #e8452c;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #219a52;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d68910;
+        }
+
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 12px;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕНТ ===== */
+        .container {
+            flex: 1;
+            padding: 20px 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ===== ПАНЕЛЬ УПРАВЛЕНИЯ (админ) ===== */
+        .admin-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .admin-panel label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        /* ===== ФИЛЬТРЫ И ПОИСК ===== */
+        .filters {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 15px;
+            align-items: center;
+        }
+
+        .filters input,
+        .filters select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            min-width: 120px;
+        }
+
+        .filters input:focus,
+        .filters select:focus {
+            outline: none;
+            border-color: #e8452c;
+        }
+
+        .filters .search-input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* ===== КНОПКА СОРТИРОВКИ ===== */
+        .sort-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .sort-section select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+            min-width: 180px;
+        }
+
+        .sort-section select:focus {
+            outline: none;
+            border-color: #e8452c;
+        }
+
+        /* ===== СЧЁТЧИК ===== */
+        .counter {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+
+        /* ===== ТАБЛИЦА ===== */
+        .table-wrapper {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        thead {
+            background: #2c3e50;
+            color: white;
+        }
+
+        th {
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th:hover {
+            background: #1a2a3a;
+        }
+
+        th .arrow {
+            margin-left: 5px;
+            font-size: 12px;
+        }
+
+        td {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-muted {
+            color: #888;
+        }
+
+        .in-stock {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .out-of-stock {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #e8452c;
+        }
+
+        .actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        /* ===== ФУТЕР С АВТОРОМ ===== */
+        .footer {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px 40px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer .author {
+            font-size: 16px;
+            font-weight: bold;
+            color: #e8452c;
+        }
+
+        .footer .group {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .footer .year {
+            color: #555;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* ===== МОДАЛЬНОЕ ОКНО ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 700px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e8452c;
+            padding-bottom: 10px;
+        }
+
+        .modal .close-btn {
+            float: right;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .modal .close-btn:hover {
+            color: #e74c3c;
+        }
+
+        .modal .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal .form-group label {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .modal .form-group input,
+        .modal .form-group select,
+        .modal .form-group textarea {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .modal .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .modal .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .modal .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        /* ===== ДЕТАЛИ ТОВАРА ===== */
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 20px;
+        }
+
+        .detail-grid .label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .detail-grid .value {
+            color: #2c3e50;
+        }
+
+        /* ===== УВЕДОМЛЕНИЯ ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #2c3e50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid #27ae60;
+        }
+
+        .toast.error {
+            border-left: 4px solid #e74c3c;
+        }
+
+        .toast.info {
+            border-left: 4px solid #3498db;
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 15px 20px;
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .header-left {
+                justify-content: center;
+            }
+
+            .header-right {
+                justify-content: center;
+            }
+
+            .container {
+                padding: 10px 15px;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filters .search-input {
+                min-width: auto;
+            }
+
+            .sort-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .admin-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .modal .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer {
+                padding: 15px 20px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th,
+            td {
+                padding: 6px 8px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn-sm {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 20px;
+            }
+
+            .modal {
+                padding: 20px;
+            }
+
+            .header-right .btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
+
+        /* скролл для таблицы */
+        .table-wrapper {
+            max-height: 550px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== ШАПКА ===== -->
+    <header class="header">
+        <div class="header-left">
+            <span class="logo">🔧 МАСТЕРБОЛТ</span>
+            <span class="logo-sub">шуруповёрты</span>
+        </div>
+        <div class="header-right">
+            <span class="user-info" id="userInfo">👤 Администратор</span>
+            <button class="btn btn-outline" onclick="logout()">Выйти</button>
+        </div>
+    </header>
+
+    <!-- ===== ОСНОВНОЙ КОНТЕНТ ===== -->
+    <div class="container">
+
+        <!-- Панель администратора -->
+        <div class="admin-panel" id="adminPanel">
+            <span style="font-weight:bold; color:#e8452c;">🔑 АДМИН ПАНЕЛЬ</span>
+            <button class="btn btn-success" onclick="openAddModal()">➕ ДОБАВИТЬ ТОВАР</button>
+            <button class="btn btn-primary" onclick="refreshData()">🔄 ОБНОВИТЬ</button>
+            <button class="btn btn-warning" onclick="exportData()">📤 ЭКСПОРТ</button>
+        </div>
+
+        <!-- Фильтры -->
+        <div class="filters">
+            <input type="text" class="search-input" id="searchInput" placeholder="🔍 Поиск по модели..." oninput="applyFilters()">
+
+            <select id="brandFilter" onchange="applyFilters()">
+                <option value="Все">Все бренды</option>
+            </select>
+
+            <select id="powerFilter" onchange="applyFilters()">
+                <option value="Все">Все типы питания</option>
+                <option value="Аккумуляторный">Аккумуляторный</option>
+                <option value="Сетевой">Сетевой</option>
+            </select>
+
+            <select id="motorFilter" onchange="applyFilters()">
+                <option value="Все">Все двигатели</option>
+                <option value="Бесщеточный">Бесщеточный</option>
+                <option value="Щеточный">Щеточный</option>
+            </select>
+
+            <select id="voltageFilter" onchange="applyFilters()">
+                <option value="Все">Все напряжение</option>
+            </select>
+
+            <select id="torqueFilter" onchange="applyFilters()">
+                <option value="Все">Все момент</option>
+            </select>
+
+            <div class="sort-section">
+                <label>Сортировка:</label>
+                <select id="sortSelect" onchange="applySort()">
+                    <option value="none">Без сортировки</option>
+                    <option value="price_asc">Цена (дешёвые)</option>
+                    <option value="price_desc">Цена (дорогие)</option>
+                    <option value="name_asc">Название А-Я</option>
+                    <option value="name_desc">Название Я-А</option>
+                    <option value="brand_asc">Бренд А-Я</option>
+                    <option value="brand_desc">Бренд Я-А</option>
+                    <option value="power_asc">Питание А-Я</option>
+                    <option value="power_desc">Питание Я-А</option>
+                    <option value="motor_asc">Двигатель А-Я</option>
+                    <option value="motor_desc">Двигатель Я-А</option>
+                    <option value="chuck_asc">Патрон (мин-макс)</option>
+                    <option value="chuck_desc">Патрон (макс-мин)</option>
+                    <option value="voltage_asc">Напряжение (мин-макс)</option>
+                    <option value="voltage_desc">Напряжение (макс-мин)</option>
+                    <option value="torque_asc">Момент (мин-макс)</option>
+                    <option value="torque_desc">Момент (макс-мин)</option>
+                </select>
+            </div>
+
+            <button class="btn btn-danger btn-sm" onclick="resetFilters()">Сбросить</button>
+        </div>
+
+        <!-- Счётчик -->
+        <div class="counter" id="counter">Найдено: 0 из 0</div>
+
+        <!-- Таблица -->
+        <div class="table-wrapper" id="tableWrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th onclick="sortBy('model')">Модель <span class="arrow">⇅</span></th>
+                        <th onclick="sortBy('brand')">Бренд <span class="arrow">⇅</span></th>
+                        <th onclick="sortBy('powerType')">Питание <span class="arrow">⇅</span></th>
+                        <th onclick="sortBy('motorType')">Двигатель <span class="arrow">⇅</span></th>
+                        <th onclick="sortBy('chuckSize')">Патрон <span class="arrow">⇅</span></th>
+                        <th onclick="sortBy('voltage')">Напряжение <span class="arrow">⇅</span></th>
+                        <th onclick="sortBy('maxTorque')">Момент <span class="arrow">⇅</span></th>
+                        <th>Опции</th>
+                        <th onclick="sortBy('price')">Цена <span class="arrow">⇅</span></th>
+                        <th>Наличие</th>
+                        <th class="text-center">Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                    <!-- Товары будут загружены сюда -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== ФУТЕР С АВТОРОМ ===== -->
+    <footer class="footer">
+        <div class="author">👨‍💻 Разработчик: Куколь Александра Владимировна</div>
+        <div class="group">Группа: ИС-941</div>
+        <div class="year">© 2024 МастерБолт</div>
+    </footer>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО (добавление/редактирование) ===== -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal()">✕</button>
+            <h2 id="modalTitle">Добавить товар</h2>
+            <input type="hidden" id="editId" value="0">
+
+            <div class="form-group">
+                <label>Модель *</label>
+                <input type="text" id="fModel" placeholder="Введите модель">
+            </div>
+
+            <div class="form-group">
+                <label>Производитель *</label>
+                <input type="text" id="fBrand" placeholder="Введите производителя">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Тип питания</label>
+                    <select id="fPower">
+                        <option value="Аккумуляторный">Аккумуляторный</option>
+                        <option value="Сетевой">Сетевой</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Тип двигателя</label>
+                    <select id="fMotor">
+                        <option value="Бесщеточный">Бесщеточный</option>
+                        <option value="Щеточный">Щеточный</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Размер патрона</label>
+                    <select id="fChuck">
+                        <option value="6.35 мм (HEX)">6.35 мм (HEX)</option>
+                        <option value="10 мм">10 мм</option>
+                        <option value="13 мм">13 мм</option>
+                        <option value="16 мм">16 мм</option>
+                        <option value="1/4\"">1/4"</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Напряжение</label>
+                    <select id="fVoltage">
+                        <option value="10.8 В">10.8 В</option>
+                        <option value="12 В">12 В</option>
+                        <option value="14.4 В">14.4 В</option>
+                        <option value="18 В">18 В</option>
+                        <option value="20 В">20 В</option>
+                        <option value="21 В">21 В</option>
+                        <option value="24 В">24 В</option>
+                        <option value="36 В">36 В</option>
+                        <option value="40 В">40 В</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Макс. момент</label>
+                    <select id="fTorque">
+                        <option value="20 Н·м">20 Н·м</option>
+                        <option value="30 Н·м">30 Н·м</option>
+                        <option value="40 Н·м">40 Н·м</option>
+                        <option value="45 Н·м">45 Н·м</option>
+                        <option value="50 Н·м">50 Н·м</option>
+                        <option value="56 Н·м">56 Н·м</option>
+                        <option value="60 Н·м">60 Н·м</option>
+                        <option value="70 Н·м">70 Н·м</option>
+                        <option value="80 Н·м">80 Н·м</option>
+                        <option value="100 Н·м">100 Н·м</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Скорость вращения</label>
+                    <select id="fSpeed">
+                        <option value="0-400 об/мин">0-400 об/мин</option>
+                        <option value="0-500/0-1800 об/мин">0-500/0-1800 об/мин</option>
+                        <option value="0-450/0-1500 об/мин">0-450/0-1500 об/мин</option>
+                        <option value="0-500/0-1900 об/мин">0-500/0-1900 об/мин</option>
+                        <option value="0-600/0-2000 об/мин">0-600/0-2000 об/мин</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Вес (кг)</label>
+                    <input type="text" id="fWeight" placeholder="1.5">
+                </div>
+                <div class="form-group">
+                    <label>Количество *</label>
+                    <input type="number" id="fQuantity" placeholder="10" value="10">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Цена (₽) *</label>
+                    <input type="number" id="fPrice" placeholder="5000" value="5000">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Дополнительные опции (через ; )</label>
+                <textarea id="fOptions" placeholder="Li-Ion аккумулятор 2.0 Ач; LED подсветка"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Описание</label>
+                <textarea id="fDescription" placeholder="Описание товара"></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-danger" onclick="closeModal()">Отмена</button>
+                <button class="btn btn-success" onclick="saveProduct()">💾 Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== МОДАЛЬНОЕ ОКНО (детали) ===== -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal">
+            <button class="close-btn" onclick="closeDetailModal()">✕</button>
+            <h2 id="detailTitle">Детали товара</h2>
+            <div id="detailContent"></div>
+            <div class="modal-actions">
+                <button class="btn btn-danger" onclick="closeDetailModal()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST (уведомления) ===== -->
+    <div class="toast" id="toast"></div>
+
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // =============================================
+        // ДАННЫЕ
+        // =============================================
+
+        let products = [];
+        let filteredProducts = [];
+        let currentSort = 'none';
+        let isAdmin = true;
+
+        // =============================================
+        // ГЕНЕРАЦИЯ ТЕСТОВЫХ ДАННЫХ
+        // =============================================
+
+        function generateProducts() {
+            const brands = ['Makita', 'Bosch', 'DeWALT', 'Metabo', 'Интерскол', 'Bort', 'Greenworks',
+                'Ryobi', 'Hitachi', 'AEG', 'Milwaukee', 'Sparky', 'Einhell', 'Black+Decker',
+                'CROWN', 'Xiaomi', 'Kolner', 'TROUVER', 'Zubr', 'Caliber'
+            ];
+
+            const powerTypes = ['Аккумуляторный', 'Сетевой'];
+            const motorTypes = ['Бесщеточный', 'Щеточный'];
+            const chucks = ['6.35 мм (HEX)', '10 мм', '13 мм', '16 мм', '1/4"'];
+            const voltages = ['10.8 В', '12 В', '14.4 В', '18 В', '20 В', '21 В', '24 В', '36 В', '40 В'];
+            const torques = ['20 Н·м', '30 Н·м', '40 Н·м', '45 Н·м', '50 Н·м', '56 Н·м', '60 Н·м', '70 Н·м', '80 Н·м',
+                '100 Н·м'
+            ];
+            const speeds = ['0-400 об/мин', '0-500/0-1800 об/мин', '0-450/0-1500 об/мин', '0-500/0-1900 об/мин',
+                '0-600/0-2000 об/мин'
+            ];
+            const optionsList = [
+                'Li-Ion аккумулятор 2.0 Ач', 'Li-Ion аккумулятор 4.0 Ач', 'Li-Ion аккумулятор 5.0 Ач',
+                'Быстрая зарядка 30 мин', 'LED подсветка рабочей зоны', 'Автоматическая блокировка шпинделя',
+                'Электронная регулировка оборотов', 'Быстрозажимной патрон', 'Пластиковый кейс в комплекте',
+                'Защита от перегрузки', 'Защита от перегрева', 'Низкий уровень шума',
+                'Магнитный держатель для бит', 'Реверс', 'Ударный механизм'
+            ];
+
+            const result = [];
+            for (let i = 1; i <= 30; i++) {
+                const brand = brands[Math.floor(Math.random() * brands.length)];
+                const num = Math.floor(Math.random() * 900) + 100;
+                const suffix = ['X', 'R', 'L', 'F', 'G', 'PRO', 'MAX', 'Plus', 'Ultra'][Math.floor(Math.random() * 9)];
+                const qty = Math.floor(Math.random() * 51);
+
+                const opts = [];
+                const count = Math.floor(Math.random() * 5) + 2;
+                const shuffled = [...optionsList].sort(() => Math.random() - 0.5);
+                for (let j = 0; j < count && j < shuffled.length; j++) {
+                    opts.push(shuffled[j]);
+                }
+
+                result.push({
+                    id: i,
+                    model: brand + ' ' + num + suffix,
+                    brand: brand,
+                    powerType: powerTypes[Math.floor(Math.random() * powerTypes.length)],
+                    motorType: motorTypes[Math.floor(Math.random() * motorTypes.length)],
+                    chuckSize: chucks[Math.floor(Math.random() * chucks.length)],
+                    voltage: voltages[Math.floor(Math.random() * voltages.length)],
+                    maxTorque: torques[Math.floor(Math.random() * torques.length)],
+                    rotationSpeed: speeds[Math.floor(Math.random() * speeds.length)],
+                    weight: (Math.floor(Math.random() * 28) + 8) / 10 + ' кг',
+                    options: opts.join('; '),
+                    quantity: qty,
+                    price: Math.floor(Math.random() * 32000) + 3000,
+                    description: brand + ' — ' + ['профессиональный', 'полупрофессиональный', 'бытовой'][Math.floor(Math
+                        .random() * 3)] +
+                        ' шуруповёрт. ' + ['Высокая надёжность', 'Отличная производительность',
+                            'Долговечность', 'Эргономичный дизайн'
+                        ][Math.floor(Math.random() * 4)] +
+                        '. Подходит для ' + ['строительства', 'ремонта', 'монтажных работ', 'сборки мебели'][Math.floor(
+                            Math.random() * 4)] + '.',
+                    inStock: qty > 0
+                });
+            }
+            return result;
+        }
+
+        // =============================================
+        // ЗАГРУЗКА ДАННЫХ
+        // =============================================
+
+        function loadData() {
+            products = generateProducts();
+            filteredProducts = [...products];
+            updateFilterOptions();
+            renderTable();
+        }
+
+        // =============================================
+        // ОБНОВЛЕНИЕ ФИЛЬТРОВ
+        // =============================================
+
+        function updateFilterOptions() {
+            const brands = [...new Set(products.map(p => p.brand))].sort();
+            const voltages = [...new Set(products.map(p => p.voltage))].sort();
+            const torques = [...new Set(products.map(p => p.maxTorque))].sort();
+
+            const brandSelect = document.getElementById('brandFilter');
+            brandSelect.innerHTML = '<option value="Все">Все бренды</option>';
+            brands.forEach(b => {
+                brandSelect.innerHTML += `<option value="${b}">${b}</option>`;
+            });
+
+            const voltageSelect = document.getElementById('voltageFilter');
+            voltageSelect.innerHTML = '<option value="Все">Все напряжение</option>';
+            voltages.forEach(v => {
+                voltageSelect.innerHTML += `<option value="${v}">${v}</option>`;
+            });
+
+            const torqueSelect = document.getElementById('torqueFilter');
+            torqueSelect.innerHTML = '<option value="Все">Все момент</option>';
+            torques.forEach(t => {
+                torqueSelect.innerHTML += `<option value="${t}">${t}</option>`;
+            });
+        }
+
+        // =============================================
+        // ФИЛЬТРАЦИЯ
+        // =============================================
+
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            const brand = document.getElementById('brandFilter').value;
+            const power = document.getElementById('powerFilter').value;
+            const motor = document.getElementById('motorFilter').value;
+            const voltage = document.getElementById('voltageFilter').value;
+            const torque = document.getElementById('torqueFilter').value;
+
+            filteredProducts = products.filter(p => {
+                const matchSearch = !search || p.model.toLowerCase().includes(search);
+                const matchBrand = brand === 'Все' || p.brand === brand;
+                const matchPower = power === 'Все' || p.powerType === power;
+                const matchMotor = motor === 'Все' || p.motorType === motor;
+                const matchVoltage = voltage === 'Все' || p.voltage === voltage;
+                const matchTorque = torque === 'Все' || p.maxTorque === torque;
+                return matchSearch && matchBrand && matchPower && matchMotor && matchVoltage && matchTorque;
+            });
+
+            applySort();
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('brandFilter').value = 'Все';
+            document.getElementById('powerFilter').value = 'Все';
+            document.getElementById('motorFilter').value = 'Все';
+            document.getElementById('voltageFilter').value = 'Все';
+            document.getElementById('torqueFilter').value = 'Все';
+            document.getElementById('sortSelect').value = 'none';
+            currentSort = 'none';
+            applyFilters();
+        }
+
+        // =============================================
+        // СОРТИРОВКА
+        // =============================================
+
+        function applySort() {
+            const sort = document.getElementById('sortSelect').value;
+            currentSort = sort;
+
+            const sorted = [...filteredProducts];
+
+            switch (sort) {
+                case 'none':
+                    break;
+                case 'price_asc':
+                    sorted.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price_desc':
+                    sorted.sort((a,
